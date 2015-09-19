@@ -1,5 +1,5 @@
-var animatePoints = function() {
-                 var points = document.getElementsByClassName('point');
+/*var pointsArray = document.getElementsByClassName('point');
+var animatePoints = function(points) {
                  for(var i=0; i<= points.length; i++){
                      var revealPoint = function(index) {
                          points[i].style.opacity = 1;
@@ -7,12 +7,38 @@ var animatePoints = function() {
                          points[i].style.msTransform = "scaleX(1) translateY(0)";
                          points[i].style.WebkitTransform = "scaleX(1) translateY(0)"; 
                      }
-                     revealPoint(i);
+                     revealPoint();
                  }
  
-             }; 
+             }; */
 
 
+var pointsArray = document.getElementsByClassName('point');
+
+var animatePoints = function(points) {
+    forEach(points, function myCallback(element) {
+        element.style.opacity = 1;
+        element.style.transform = "scaleX(1) translateY(0)";
+        element.style.msTransform = "scaleX(1) translateY(0)";
+        element.style.WebkitTransform = "scaleX(1) translateY(0)"; 
+    });     
+}
+
+ window.onload = function() {
+     var sellingPoints = document.getElementsByClassName('selling-points')[0];
+     var scrollDistance = sellingPoints.getBoundingClientRect().top - window.innerHeight + 200;
+     
+     // Automatically animate the points on a tall screen where scrolling can't trigger the animation
+     if (window.innerHeight > 950) {
+         animatePoints(pointsArray);
+     }
+     
+     window.addEventListener('scroll', function(event) {
+          if (document.body.scrollTop >= scrollDistance) {
+              animatePoints(pointsArray);
+         }   
+     }); 
+ }
 
 
 /*var animatePoints = function() {
