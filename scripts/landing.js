@@ -15,13 +15,14 @@ var animatePoints = function(points) {
 
 var pointsArray = document.getElementsByClassName('point');
 
-var animatePoints = function(points) {
-    forEach(points, function myCallback(element) {
+function myCallback(element) {
         element.style.opacity = 1;
         element.style.transform = "scaleX(1) translateY(0)";
         element.style.msTransform = "scaleX(1) translateY(0)";
         element.style.WebkitTransform = "scaleX(1) translateY(0)"; 
-    });     
+    }
+var animatePoints = function(points) {
+    forEach(points, myCallback);     
 }
 
  window.onload = function() {
