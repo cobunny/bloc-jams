@@ -1,4 +1,5 @@
-/*var pointsArray = document.getElementsByClassName('point');
+/* Method V1:
+var pointsArray = document.getElementsByClassName('point');
 var animatePoints = function(points) {
                  for(var i=0; i<= points.length; i++){
                      var revealPoint = function(index) {
@@ -13,6 +14,7 @@ var animatePoints = function(points) {
              }; */
 
 
+/* Method V2:
 var pointsArray = document.getElementsByClassName('point');
 
 function myCallback(element) {
@@ -20,13 +22,11 @@ function myCallback(element) {
     element.style.transform = "scaleX(1) translateY(0)";
     element.style.msTransform = "scaleX(1) translateY(0)";
     element.style.WebkitTransform = "scaleX(1) translateY(0)";
-}
-var animatePoints = function (points) {
-    forEach(points, myCallback);
-}
+}*/
 
-window.onload = function () {
-    var sellingPoints = document.getElementsByClassName('selling-points')[0];
+
+$(window).load(function () {
+   /* var sellingPoints = document.getElementsByClassName('selling-points')[0];
     var scrollDistance = sellingPoints.getBoundingClientRect().top - window.innerHeight + 200;
 
     // Automatically animate the points on a tall screen where scrolling can't trigger the animation
@@ -38,9 +38,34 @@ window.onload = function () {
         if (document.body.scrollTop >= scrollDistance) {
             animatePoints(pointsArray);
         }
+    });*/
+    
+    if ($(window).height() > 950) {
+        animatePoints();
+    }
+    
+    var scrollDistance =$('.selling-points').offset().top - $(window).height() + 200;
+    
+    $(window).scroll(function(event) {
+        
+        if ($(window).scrollTop() >= scrollDistance) {
+            animatePoints();
+        }
     });
-}
+});
 
+
+var animatePoints = function () {
+    /*forEach(points, myCallback);*/
+    //Animates points  
+    var revealPoint = function() {
+        $(this).css({
+            'opacity': '1',
+            'transform': 'scaleX(1) translateY(0)'
+        });
+    };
+    $.each($('.point'), revealPoint);
+};
 
 /*
 var animatePoints = function() {
