@@ -26,7 +26,7 @@
          { name: 'Ring, ring, ring', length: '5:01' },
          { name: 'Fits in your pocket', length: '3:21'},
          { name: 'Can you hear me now?', length: '3:14' },
-         { name: 'Wrong phone number', length: '2:15'}
+         { name: 'Wrong phone number', length: '2:15'}  
      ]
  };
 
@@ -46,25 +46,18 @@
      ]
  };
 
-var createSongRow = function(songNumber, songName, songLength) {
-    console.log("creating song row");
-    
-     
-     var template =
+var createSongRow = function(songNumber, songName, songLength) {   
+    var template =
         '<tr class="album-view-song-item">'
-      + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
-     /* + '  <td class="song-item-number">' + songNumber + '</td>'*/
-      + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
-      + '</tr>'
-      ;
+        + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
+        /* + '  <td class="song-item-number">' + songNumber + '</td>'*/
+        + '  <td class="song-item-title">' + songName + '</td>'
+        + '  <td class="song-item-duration">' + songLength + '</td>'
+        + '</tr>'
+        ;
 
- 
-     return template;
-    
-    
- 
- };
+    return template;
+};
 
 
  // #1
@@ -75,9 +68,6 @@ var albumImage = document.getElementsByClassName('album-cover-art')[0];
 var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
 var setCurrentAlbum = function(album) {
- 
-    
- 
      // #2
      albumTitle.firstChild.nodeValue = album.name;
      albumArtist.firstChild.nodeValue = album.artist;
@@ -122,10 +112,43 @@ window.onload = function() {
          }
     });
     
+    //Find the parent by the element's class name method
+    var findParentByClassName = function(element, nameOfClass){
+        if(element.parentNode.length<0){
+            alert("No parent found");
+        }
+        else
+        {
+            var parentOfElement = element.parentElement;
+            while(parentOfElement.className !== nameOfClass) {
+                parentOfElement = parentOfElement.parentElement;
+            }
+            return parentOfElement;
+        }
+    };
+
+
+    //Get the song number for the activated element method
+    var getSongItem = function(element){
+        switch(element.className){
+            case 'album-song-button':
+            case 'ion-play':    
+            case 'ion-pause':
+                return findParentByClassName(element, 'song-item-number');
+            case 'album-view-song-item':
+                return element.querySelector('.song-item-number');
+            case 'song-item-title':
+            case 'song-item-duration':
+                return findParentByClassName(element, 'album-view-song-item').querySelector('.song-item-number');
+            case 'song-item-number':
+                return element;
+            default:
+                return;       
+        }
+    };
+    
       // Add a clickHandler() Function
-    var clickHandler = function(targetElement) {
-        console.log("adding click handler");
-        
+    var clickHandler = function(targetElement) {        
         var songItem = getSongItem(targetElement);
          
         if (currentlyPlayingSong === null) {
@@ -152,7 +175,6 @@ window.onload = function() {
     
     // Add mouseover Event
     songListContainer.addEventListener('mouseover', function(event) {
-        console.log("adding mouse hover");
         // Only target individual song rows during event delegation
         if (event.target.parentElement.className === 'album-view-song-item') {
               // Change the content from the number to the play button's HTML
@@ -171,61 +193,19 @@ window.onload = function() {
     for (i = 0; i < songRows.length; i++) {
         songRows[i].addEventListener('mouseleave', function(event) {
             // Selects first child element, which is the song-item-number element
-            //this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+            //this.children[0].innerHTML = this.children[0].getAttribute('data-song-number'); 
             var songItem = getSongItem(event.target);
             var songItemNumber = songItem.getAttribute('data-song-number');
-            console.log("adding event for " +songItemNumber);
-            
+
             if (songItemNumber !== currentlyPlayingSong) {
                 songItem.innerHTML = songItemNumber;
             }
-        });    
-        
+        });
+            
         songRows[i].addEventListener('click', function(event) {
-              clickHandler(event.target);
-         });        
+            clickHandler(event.target);
+        });       
     }
-    
-     //Find the parent by the element's class name method
-    var findParentByClassName = function(element, nameOfClass){
-        if(element.parentNode.length<0){
-            alert("No parent found");
-        }
-        else{
-            var parentOfElement = element.parentElement;
-            while(parentOfElement.className !== nameOfClass) {
-                parentOfElement = parentOfElement.parentElement;
-            }
-            return parentOfElement;
-        }
-    };
-    
-    
-     //Get the song number for the activated element method
-    var getSongItem = function(element){
-        switch(element.className){
-            case 'album-song-button':
-            case 'ion-play':    
-            case 'ion-pause':
-                return findParentByClassName(element, 'song-item-number');
-            case 'album-view-song-item':
-                return element.querySelector('.song-item-number');
-            case 'song-item-title':
-            case 'song-item-duration':
-                return findParentByClassName(element, 'album-view-song-item').querySelector('.song-item-number');
-            case 'song-item-number':
-                return element;
-            default:
-                return;
-        }
-    };
-   
-   
-             
-   
-    
-   
-    
       
  };
      
