@@ -177,18 +177,17 @@ window.onload = function() {
     songListContainer.addEventListener('mouseover', function(event) {
         // Only target individual song rows during event delegation
         if (event.target.parentElement.className === 'album-view-song-item') {
-              // Change the content from the number to the play button's HTML
-               event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
+            // Change the content from the number to the play button's HTML
             var songItem = getSongItem(event.target);
-            
+
             if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
-                  songItem.innerHTML = playButtonTemplate;
-             }  
+                songItem.innerHTML = playButtonTemplate;
+            }  
         }
-     
-     });
+
+    });
     
-    
+
     // Add mouseleave Event
     for (i = 0; i < songRows.length; i++) {
         songRows[i].addEventListener('mouseleave', function(event) {
@@ -201,7 +200,7 @@ window.onload = function() {
                 songItem.innerHTML = songItemNumber;
             }
         });
-            
+
         songRows[i].addEventListener('click', function(event) {
             clickHandler(event.target);
         });       
