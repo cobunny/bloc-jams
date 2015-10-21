@@ -75,7 +75,7 @@ var songListContainer = document.getElementsByClassName('album-view-song-list')[
 var createSongRow = function (songNumber, songName, songLength) {
     var template =
         '<tr class="album-view-song-item">' + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
-        /* + '  <td class="song-item-number">' + songNumber + '</td>'*/
+    /* + '  <td class="song-item-number">' + songNumber + '</td>'*/
     + '  <td class="song-item-title">' + songName + '</td>' + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>' + '</tr>';
 
     var $row = $(template);
@@ -201,6 +201,7 @@ var setSong = function (songNumber) {
 
 
 // Click on the previousButton/nextButton to update the song's name and its artist's name in the play bar.
+
 var previousSong = function () {
 
     var getLastSongNumber = function (index) {
@@ -396,6 +397,16 @@ var setupSeekBars = function () {
 
                 seek(seekBarFillRatio * currentSoundFile.getDuration());
 
+            }
+            else
+            {
+
+                setVolume(seekBarFillRatio);
+            }
+
+            updateSeekPercentage($seekBar, seekBarFillRatio);
+        });
+
         $(document).bind('mouseup.thumb', function () {
             $(document).unbind('mousemove.thumb');
             $(document).unbind('mouseup.thumb');
@@ -444,8 +455,8 @@ var filterTimeCode = function(timeInSeconds) {
     var totalSeconds = parseFloat(timeInSeconds);
     var minutes = Math.floor(totalSeconds / 60);
     var seconds = Math.floor(totalSeconds % 60);
-    
-    
+
+
     return (minutes + ":" + seconds);
 
 }
