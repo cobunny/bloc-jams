@@ -201,7 +201,6 @@ var setSong = function (songNumber) {
 
 
 // Click on the previousButton/nextButton to update the song's name and its artist's name in the play bar.
-
 var previousSong = function () {
 
     var getLastSongNumber = function (index) {
@@ -396,16 +395,6 @@ var setupSeekBars = function () {
             if ($seekBar.parent().attr('class') == 'seek-control') {
 
                 seek(seekBarFillRatio * currentSoundFile.getDuration());
-
-            }
-            else
-            {
-
-                setVolume(seekBarFillRatio);
-            }
-
-            updateSeekPercentage($seekBar, seekBarFillRatio);
-        });
 
         $(document).bind('mouseup.thumb', function () {
             $(document).unbind('mousemove.thumb');
